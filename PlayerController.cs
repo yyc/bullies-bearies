@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 		} else {
 			moveDirection = new Vector3(Input.GetAxis ("Horizontal"), moveDirection.y, 0);
 			moveDirection = transform.TransformDirection (moveDirection);
-			moveDirection.x *= Speed / 2;
+			moveDirection.x *= Speed;
 		}
 		if (moveDirection.x < 0 && facingRight || moveDirection.x > 0 && !facingRight) {
 			Flip ();
