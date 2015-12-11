@@ -37,8 +37,6 @@ public class PlayerController : MonoBehaviour {
 		if (moveDirection.x < 0 && facingRight || moveDirection.x > 0 && !facingRight) {
 			Flip ();
 		}
-//		moveDirection.y -= Gravity * Time.deltaTime;
-//		characterController.Move (moveDirection * Time.deltaTime);
 		moveDirection.y -= Gravity / 60;
 		characterController.Move (moveDirection / 60);
 	}
@@ -48,5 +46,10 @@ public class PlayerController : MonoBehaviour {
 		Vector3 currScale = transform.localScale;
 		currScale.x *= -1;
 		transform.localScale = currScale;
+	}
+	void onTriggerEnter( Collider col){
+		if(col.gameObject.CompareTag ("Berry")){
+			Debug.Log ("hit berry");
+		}
 	}
 }

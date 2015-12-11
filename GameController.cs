@@ -21,8 +21,8 @@ public class GameController : MonoBehaviour {
 		for (int i = 0; i < spawnBerries; i++) {
 			bush = bushWithoutBerry(bushes);
 			temp = Object.Instantiate(berryPrefab);
-			temp.transform.parent = bush.transform;
-			temp.transform.localPosition = new Vector3(0, 0, -2);
+			temp.transform.position = bush.transform.position + 
+				new Vector3(Random.value * bush.transform.lossyScale.x * 0.5f, Random.value * bush.transform.lossyScale.y * 0.5f, -1);
 		}
 		InvokeRepeating ("EverySecond", 0, 1);
 		Invoke ("SpawnBerries", berrySpawnInterval);
@@ -49,8 +49,8 @@ public class GameController : MonoBehaviour {
 			GameObject bush;
 			bush = bushWithoutBerry (GameObject.FindGameObjectsWithTag ("Bush"));
 			temp = Object.Instantiate (berryPrefab);
-			temp.transform.parent = bush.transform;
-			temp.transform.localPosition = new Vector3 (0, 0, -2);
+			temp.transform.position = bush.transform.position + 
+				new Vector3(Random.value * bush.transform.lossyScale.x * 0.5f, Random.value * bush.transform.lossyScale.y * 0.5f, -1);
 		}
 		Invoke ("SpawnBerries", berrySpawnInterval);
 	}
