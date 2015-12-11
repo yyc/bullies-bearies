@@ -7,7 +7,7 @@ public class BasketController : MonoBehaviour {
 	private List<Berry> berryList = new List<Berry> ();
 	private int activeBerryIndex = -1;
 	private GameController gameController;
-
+	
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
@@ -17,7 +17,7 @@ public class BasketController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	}
-
+	
 	void UpdateEvery30Sec() {
 		bool isDay = gameController.dayNightCycle > 0;
 		float largeProbability = Math.Abs (gameController.dayNightCycle) * 0.1F;
@@ -25,7 +25,7 @@ public class BasketController : MonoBehaviour {
 		float goodToBoodProbability = (isDay) ? smallProbability : largeProbability;
 		float badToGoodProbability = (isDay) ? largeProbability : smallProbability;
 		System.Random rng = new System.Random();
-
+		
 		foreach (Berry berry in berryList) {
 			float randFloat = (float) rng.NextDouble ();
 			if (berry.IsGood ()) {
@@ -39,15 +39,15 @@ public class BasketController : MonoBehaviour {
 			}
 		}
 	}
-
+	
 	public bool IsFull() {
 		return berryList.Count == allowedCapacity;
 	}
-
+	
 	public void SetBerryCapacity(int capacity) {
 		this.allowedCapacity = capacity;
 	}
-
+	
 	public bool AddBerry(Berry newBerry) {
 		if (berryList.Count + 1 > allowedCapacity) {
 			return false;
@@ -55,7 +55,7 @@ public class BasketController : MonoBehaviour {
 		berryList.Add (newBerry);
 		return true;
 	}
-
+	
 	public int GetTotalMultiplier() {
 		int total = 0;
 		foreach (Berry berry in berryList) {
@@ -63,7 +63,7 @@ public class BasketController : MonoBehaviour {
 		}
 		return total;
 	}
-
+	
 	Berry GetActiveBerry() {
 		if (this.berryList.Count < 1) {
 			return null;
@@ -72,17 +72,17 @@ public class BasketController : MonoBehaviour {
 			this.activeBerryIndex = 0;
 		}
 		return berryList [this.activeBerryIndex];
-
+		
 	}
-
+	
 	void SwitchActiveBerry() {
 		if (berryList.Count < 1) {
 			return;
 		}
-
+		
 		this.activeBerryIndex = (this.activeBerryIndex + 1) % this.berryList.Count;
 	}
-
+	
 	public int GetGoodBerryCount() {
 		int goodBerryCount = 0;
 		foreach (Berry berry in berryList) {
@@ -92,7 +92,7 @@ public class BasketController : MonoBehaviour {
 		}
 		return goodBerryCount;
 	}
-
+	
 	public int GetBadBerryCount() {
 		int badBerryCount = 0;
 		foreach (Berry berry in berryList) {
@@ -101,5 +101,8 @@ public class BasketController : MonoBehaviour {
 			}
 		}
 		return badBerryCount;
+	}
+	public void Upgrade(){
+		
 	}
 }
