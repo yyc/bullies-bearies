@@ -29,12 +29,7 @@ public class GameController : MonoBehaviour {
 	}
 	GameObject bushWithoutBerry(GameObject[] bushes){
 		int rand = Mathf.FloorToInt(Random.value * bushes.Length);
-		if (bushes [rand].transform.childCount >= 1) {
-			return bushWithoutBerry (bushes);
-		} else {
-			return bushes[rand];
-		}
-
+		return bushes[rand];
 	}
 	// Update is called once per frame
 	void Update () {
