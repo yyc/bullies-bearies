@@ -83,6 +83,9 @@ public class BasketController : MonoBehaviour {
 		this.activeBerryIndex = (this.activeBerryIndex + 1) % this.berryList.Count;
 	}
 	
+	public void RemoveActiveBerry() {
+	}
+
 	public int GetGoodBerryCount() {
 		int goodBerryCount = 0;
 		foreach (Berry berry in berryList) {
@@ -102,6 +105,11 @@ public class BasketController : MonoBehaviour {
 		}
 		return badBerryCount;
 	}
+
+	public bool isEmpty() {
+		return ! (this.berryList.Count > 0);
+	}
+
 	public void Upgrade(){
 		
 	}

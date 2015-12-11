@@ -49,6 +49,8 @@ public class Bully : MonoBehaviour {
 			Flip ();
 		}
 		if (other.CompareTag ("Player")) {
+			if (!basketController.isEmpty()) {
+			}
 		}
 	}
 	void Satisfied() {
