@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BasketController : MonoBehaviour {
 	public int allowedCapacity = 8;
 	private List<Berry> berryList = new List<Berry> ();
 	private int activeBerryIndex = -1;
 	private GameController gameController;
+	public Sprite goodBerry;
+	public Sprite badBerry;
 	
 	// Use this for initialization
 	void Start () {
@@ -16,6 +19,19 @@ public class BasketController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (activeBerryIndex == -1) {
+			this.GetComponentInChildren<Text> ().text = "";
+		} else {
+			Berry activeBerry = berryList[activeBerryIndex];
+			this.GetComponentInChildren<Text>().text = ((activeBerry.IsGood())? "+" : "") + activeBerry.GetMultiplier();
+			this.GetComponent<Image>().sprite = (activeBerry.IsGood())? goodBerry : badBerry;
+		}
+		if (Input.GetButtonDown ("Cycle")){
+			int berryNum = berryList.Count;
+			if(activeBerryIndex != -1 && berryNum != 0){
+				activeBerryIndex = (activeBerryIndex + Mathf.RoundToInt(Input.GetAxis ("Cycle")) + berryNum) % berryNum;
+			}
+		}
 	}
 	
 	void UpdateEvery30Sec() {
@@ -53,6 +69,9 @@ public class BasketController : MonoBehaviour {
 			return false;
 		}
 		berryList.Add (newBerry);
+		if (activeBerryIndex == -1) {
+			activeBerryIndex = 0;
+		}
 		return true;
 	}
 	

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ChickenController : MonoBehaviour {
 
@@ -14,8 +15,13 @@ public class ChickenController : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Player")) {
-			GameObject.Find ("UpgradeDialog").SetActive (true);
+			GameObject upgradeDialog = GameObject.Find ("UpgradeDialog");
+			upgradeDialog.SetActive (true);
+			upgradeDialog.transform.FindChild ("UpgradeText").gameObject.GetComponent<Text>().text = "hi";
 			Destroy (gameObject);
 		}
+	}
+	void UpgradeBriefcase(){
+
 	}
 }
