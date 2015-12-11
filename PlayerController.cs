@@ -8,12 +8,16 @@ public class PlayerController : MonoBehaviour {
 	public float JumpSpeed = 8f;
 	public float JumpHeight = 20f;
 	
-	public CharacterController characterController;
+	private CharacterController characterController;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	
 	private bool facingRight = true;
 	public GameObject basket;
+
+	void Start() {
+		characterController = gameObject.GetComponent<CharacterController> ();
+	}
 	// Every frame
 	void Update () {
 		
