@@ -128,7 +128,10 @@ public class BasketController : MonoBehaviour {
 		return ! (this.berryList.Count > 0);
 	}
 
+	public int GetNextCapacity(){
+		return allowedCapacity + 1;
+	}
 	public void Upgrade(){
-		
+		allowedCapacity = GetNextCapacity ();
 	}
 }
