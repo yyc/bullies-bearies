@@ -10,6 +10,8 @@ public class BasketController : MonoBehaviour {
 	private GameController gameController;
 	public Sprite goodBerry;
 	public Sprite badBerry;
+
+	public Text briefcaseCapacityText;
 	
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,7 @@ public class BasketController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		briefcaseCapacityText.text = this.berryList.Count.ToString() + "/" + allowedCapacity.ToString();
 		if (activeBerryIndex == -1) {
 			this.GetComponentInChildren<Text> ().text = "";
 		} else {
