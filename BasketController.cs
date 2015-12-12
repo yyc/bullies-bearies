@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BasketController : MonoBehaviour {
 	public int allowedCapacity = 8;
+	public float dayNightCycle = 0;
 	private List<Berry> berryList = new List<Berry> ();
 	private int activeBerryIndex = -1;
 	private GameController gameController;
@@ -16,7 +17,7 @@ public class BasketController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
+		//gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
 		berryJuiceController = GameObject.Find ("berryJuiceController").GetComponent<BerryJuiceController> ();
 		InvokeRepeating("UpdateEvery30Sec", 0, 30.0F);
 	}
@@ -40,9 +41,9 @@ public class BasketController : MonoBehaviour {
 	}
 	
 	void UpdateEvery30Sec() {
-		bool isDay = gameController.dayNightCycle > 0;
-		float largeProbability = Math.Abs (gameController.dayNightCycle) * 0.1F;
-		float smallProbability = Math.Abs (gameController.dayNightCycle) * 0.01F;
+		bool isDay = dayNightCycle > 0;
+		float largeProbability = Math.Abs (dayNightCycle) * 0.1F;
+		float smallProbability = Math.Abs (dayNightCycle) * 0.01F;
 		float goodToBoodProbability = (isDay) ? smallProbability : largeProbability;
 		float badToGoodProbability = (isDay) ? largeProbability : smallProbability;
 		System.Random rng = new System.Random();

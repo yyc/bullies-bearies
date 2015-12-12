@@ -14,14 +14,13 @@ public class BerryJuiceController : MonoBehaviour {
 	public GameObject basketObject;
 	public GameObject fullMeter;
 	public GameObject currentMeter;
-	public GameController gameController;
+	public float difficultyMultiplier = 1;
 
 	private BasketController mainBasketController;
 
 	void Start () {
 		juiceAmount = initialJuiceAmount;
 		mainBasketController = basketObject.GetComponent<BasketController> ();
-		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 		
 	void Update () {
@@ -30,8 +29,8 @@ public class BerryJuiceController : MonoBehaviour {
 		this.badBerryCount = mainBasketController.GetBadBerryCount ();
 	}
 	void FixedUpdate(){ //60fps update
-		float tempAmount = this.juiceAmount + (this.multiplierRate - this.passiveDrain * gameController.difficultyMultiplier) * Time.smoothDeltaTime;
-		this.juiceAmount = Math.Max (0, Math.Min (tempAmount, maximumJuiceAmount));
+		float tempAmount = this.juiceAmount + (this.multiplierRate - this.passiveDrain * difficultyMultiplier) * Time.smoothDeltaTime;
+		this.juiceAmount = Mathf.Max (0, Mathf.Min (tempAmount, maximumJuiceAmount));
 		
 		float newScaleX = fullMeter.transform.localScale.x;
 		float newScaleY = (this.juiceAmount / maximumJuiceAmount) * fullMeter.transform.localScale.y;

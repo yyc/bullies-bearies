@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameController : MonoBehaviour {
+public class TutorialController : MonoBehaviour {
 	private float seconds = 0;
 	public float dayNightCycle = 0;
 	public float period = 60; // period in seconds
@@ -16,8 +16,8 @@ public class GameController : MonoBehaviour {
 
 	private GameObject upgradeChicken;
 	private BerryJuiceController berryJuiceController;
-	private GameObject player;
 	private BasketController basketController;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
@@ -28,11 +28,6 @@ public class GameController : MonoBehaviour {
 		maxBerries = Mathf.Min (maxBerries, bushes.Length);
 		upgradeChicken = Object.Instantiate (chickenPrefab);
 		upgradeChicken.SetActive (false);
-		for (int i = 0; i < spawnBerries; i++) {
-			SpawnBerry();
-		}
-		InvokeRepeating ("EverySecond", 0, 1);
-		Invoke ("SpawnBerries", berrySpawnInterval);
 	}
 	GameObject bushWithoutBerry(GameObject[] bushes){
 		int rand = Mathf.FloorToInt(Random.value * bushes.Length);
@@ -52,11 +47,6 @@ public class GameController : MonoBehaviour {
 			player.GetComponent<PlayerController>().closeBubble();
 		}
 	}
-	void EverySecond(){
-		seconds += 1f;
-		dayNightCycle = Mathf.Sin (seconds * 2 * Mathf.PI / period);
-		basketController.dayNightCycle = dayNightCycle;
-	}
 	void SpawnBerries(){
 		if (GameObject.FindGameObjectsWithTag ("Berry").Length < maxBerries) {
 			SpawnBerry ();
@@ -67,8 +57,11 @@ public class GameController : MonoBehaviour {
 		GameObject bush = bushWithoutBerry(bushes);
 		GameObject temp = Object.Instantiate(berryPrefab);
 		int berryIndex = Mathf.FloorToInt (berrySprites.Length * Mathf.Min (0.99f, Random.value));
-			temp.GetComponent<SpriteRenderer> ().sprite = berrySprites[berryIndex];
+		temp.GetComponent<SpriteRenderer> ().sprite = berrySprites[berryIndex];
 		temp.transform.position = bush.transform.position + 
 			new Vector3(Random.value * bush.transform.lossyScale.x * 0.5f, Random.value * bush.transform.lossyScale.y * 0.5f, -0.5f);
+	}
+	public void sendUpdate(int message){
+
 	}
 }

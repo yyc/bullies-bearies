@@ -23,7 +23,12 @@ public class Berry{
 		}
 		this.multiplier = Mathf.RoundToInt(((status) ? 1f : -1f) * (UnityEngine.Random.value * (maxMultiplier - minMultiplier) + minMultiplier));
 	}
-
+	public Berry(bool status, int multiplier, Sprite img){
+		this.status = status;
+		multiplier = Math.Abs (multiplier);
+		this.multiplier = (status) ? (multiplier) : -1 * multiplier;
+		berryImage = img;
+	}
 	public void ToggleStatus() {
 		this.status = !this.status;
 		this.multiplier *= -1;
