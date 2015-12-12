@@ -37,4 +37,3 @@ public class Berry{
 		return this.multiplier;
 	}
 }
-

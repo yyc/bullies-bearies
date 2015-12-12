@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class ChickenController : MonoBehaviour {
 	private BasketController basketController;
+	private Animator animator;
 	GameObject upgradeDialog;
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("Chicken Spawned");
 		basketController = GameObject.Find ("Basket").GetComponent<BasketController> ();
 		upgradeDialog = GameObject.Find ("UpgradeDialog");
+		animator = this.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -18,8 +20,8 @@ public class ChickenController : MonoBehaviour {
 			if(Input.GetAxis ("Cycle") < 0){
 				basketController.Upgrade ();
 			} else{
-				//Set to flying then call when complete
-				SpawnElsewhere ();
+				animator.SetTrigger("collideWithBully");
+//				SpawnElsewhere ();
 			}
 			upgradeDialog.GetComponent<Canvas> ().enabled = false;
 		}
@@ -36,8 +38,8 @@ public class ChickenController : MonoBehaviour {
 			upgradeDialog.transform.FindChild ("UpgradeText").gameObject.GetComponent<Text> ().text = "Upgrade Briefcase Capacity to "
 				+ basketController.GetNextCapacity();
 		} else if (other.gameObject.CompareTag ("Bully")) {
-			//Set to flying then call when complete
-			SpawnElsewhere();
+			animator.SetTrigger("collideWithBully");
+//			SpawnElsewhere();
 		}
 	}
 	void UpgradeBriefcase(){

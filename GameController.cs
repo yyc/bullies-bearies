@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
+	private float seconds = 0;
 	public float dayNightCycle = 0;
 	public float period = 60; // period in seconds
 	public float difficultyMultiplier = 1;
@@ -14,7 +15,6 @@ public class GameController : MonoBehaviour {
 	public GameObject chickenPrefab;
 
 	private GameObject upgradeChicken;
-		private float seconds = 0;
 	private BerryJuiceController berryJuiceController;
 
 	// Use this for initialization

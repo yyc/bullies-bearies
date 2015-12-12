@@ -43,5 +43,4 @@ public class BerryJuiceController : MonoBehaviour {
 	public bool IsFull(){
 		return juiceAmount == maximumJuiceAmount;
 	}
-
 }
