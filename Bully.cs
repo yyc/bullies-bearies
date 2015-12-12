@@ -4,7 +4,6 @@ using System.Collections;
 public class Bully : MonoBehaviour {
 
 	public bool satisfied;
-	public Respawner respawner;
 	public float Speed = 6f;
 	public float Gravity = 20f;
 	public float JumpSpeed = 8f;
@@ -59,7 +58,6 @@ public class Bully : MonoBehaviour {
 	}
 	void Satisfied() {
 		//WALK OFF SCREEN
-		respawner.SendMessage ("BullySatisfied", this);
 	}
 
 	void Flip() {
