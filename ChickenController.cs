@@ -19,9 +19,9 @@ public class ChickenController : MonoBehaviour {
 		if (upgradeDialog.GetComponent<Canvas> ().enabled && Input.GetButtonDown ("Cycle")) {
 			if(Input.GetAxis ("Cycle") < 0){
 				basketController.Upgrade ();
+				this.gameObject.SetActive(false);
 			} else{
 				animator.SetTrigger("collideWithBully");
-//				SpawnElsewhere ();
 			}
 			upgradeDialog.GetComponent<Canvas> ().enabled = false;
 		}
@@ -38,8 +38,8 @@ public class ChickenController : MonoBehaviour {
 			upgradeDialog.transform.FindChild ("UpgradeText").gameObject.GetComponent<Text> ().text = "Upgrade Briefcase Capacity to "
 				+ basketController.GetNextCapacity();
 		} else if (other.gameObject.CompareTag ("Bully")) {
+			Debug.Log ("ow");
 			animator.SetTrigger("collideWithBully");
-//			SpawnElsewhere();
 		}
 	}
 	void UpgradeBriefcase(){
@@ -49,6 +49,7 @@ public class ChickenController : MonoBehaviour {
 		GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
 		int numPlatforms = platforms.Length;
 		int newIndex = Mathf.FloorToInt (numPlatforms * Mathf.Min (0.99f, Random.value));
+		this.GetComponent<BoxCollider> ().isTrigger = true;
 		this.transform.position = platforms[newIndex].transform.position 
 			+ new Vector3(0, (platforms[newIndex].transform.localScale.y + this.GetComponent<BoxCollider>().size.y * this.transform.localScale.y) / 2, 0);
 		//			SpawnElsewhere(platforms, newIndex);
