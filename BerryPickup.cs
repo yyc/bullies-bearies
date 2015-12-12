@@ -17,7 +17,7 @@ public class BerryPickup : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Player") && !basket.IsFull()) {
 //			gameObject.SetActive (false);
-			basket.AddBerry (new Berry());
+			basket.AddBerry (new Berry(this.gameObject.GetComponentsInChildren<SpriteRenderer>()[0].sprite));
 			Destroy (gameObject);
 		}
 	}

@@ -8,6 +8,7 @@ public class BasketController : MonoBehaviour {
 	private List<Berry> berryList = new List<Berry> ();
 	private int activeBerryIndex = -1;
 	private GameController gameController;
+	private BerryJuiceController berryJuiceController;
 	public Sprite goodBerry;
 	public Sprite badBerry;
 
@@ -16,18 +17,19 @@ public class BasketController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
+		berryJuiceController = GameObject.Find ("berryJuiceController").GetComponent<BerryJuiceController> ();
 		InvokeRepeating("UpdateEvery30Sec", 0, 30.0F);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		briefcaseCapacityText.text = this.berryList.Count.ToString() + "/" + allowedCapacity.ToString();
+//		briefcaseCapacityText.text = this.berryList.Count.ToString() + "/" + allowedCapacity.ToString();
 		if (activeBerryIndex == -1) {
 			this.GetComponentInChildren<Text> ().text = "";
 		} else {
 			Berry activeBerry = berryList[activeBerryIndex];
 			this.GetComponentInChildren<Text>().text = ((activeBerry.IsGood())? "+" : "") + activeBerry.GetMultiplier();
-			this.GetComponent<Image>().sprite = (activeBerry.IsGood())? goodBerry : badBerry;
+			this.GetComponent<Image>().sprite = activeBerry.berryImage;
 		}
 		if (Input.GetButtonDown ("Cycle")){
 			int berryNum = berryList.Count;
@@ -136,5 +138,6 @@ public class BasketController : MonoBehaviour {
 	}
 	public void Upgrade(){
 		allowedCapacity = GetNextCapacity ();
+		berryJuiceController.juiceAmount *= 0.5f;
 	}
 }

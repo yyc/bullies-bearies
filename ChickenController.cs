@@ -17,6 +17,7 @@ public class ChickenController : MonoBehaviour {
 			if(Input.GetAxis ("Cycle") < 0){
 				basketController.Upgrade ();
 			} else{
+				//Set to flying then call when complete
 				SpawnElsewhere ();
 			}
 			upgradeDialog.GetComponent<Canvas> ().enabled = false;
@@ -34,6 +35,7 @@ public class ChickenController : MonoBehaviour {
 			upgradeDialog.transform.FindChild ("UpgradeText").gameObject.GetComponent<Text> ().text = "Upgrade Briefcase Capacity to "
 				+ basketController.GetNextCapacity();
 		} else if (other.gameObject.CompareTag ("Bully")) {
+			//Set to flying then call when complete
 			SpawnElsewhere();
 		}
 	}
@@ -43,11 +45,8 @@ public class ChickenController : MonoBehaviour {
 	void SpawnElsewhere(){
 		GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
 		int numPlatforms = platforms.Length;
-		this.transform.position = platforms[Mathf.FloorToInt(numPlatforms * Mathf.Min (0.99f, Random.value))].transform.position 
-			+ new Vector3(0, 5, 0);
-		if(this.gameObject.GetComponent<SpriteRenderer>().isVisible){
-			SpawnElsewhere();
-		} else{
-		}
+		int newIndex = Mathf.FloorToInt (numPlatforms * Mathf.Min (0.99f, Random.value));
+		this.transform.position = platforms[newIndex].transform.position + new Vector3(0, 5, 0);
+//			SpawnElsewhere(platforms, newIndex);
 	}
 }
