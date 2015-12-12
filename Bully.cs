@@ -55,6 +55,9 @@ public class Bully : MonoBehaviour {
 				satisfied = true;
 			}
 		}
+		if (hit.gameObject.CompareTag ("Bully")) {
+			Flip ();
+		}
 	}
 	void Satisfied() {
 		//WALK OFF SCREEN
