@@ -17,13 +17,15 @@ public class Bully : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		characterController =  gameObject.GetComponent<CharacterController>();
+		basketController = GameObject.Find ("Basket").GetComponent<BasketController> ();
 	}
 	
 	void Update () {
 		if (satisfied) {
-			Satisfied();
+// 			Satisfied();
+		} else {
+			Move ();
 		}
-		Move ();
 	}
 
 	void OnMouseDown() {
@@ -48,8 +50,11 @@ public class Bully : MonoBehaviour {
 		if (other.CompareTag("Platform Edge")) {
 			Flip ();
 		}
-		if (other.CompareTag ("Player")) {
-			if (!basketController.isEmpty()) {
+	}
+	void OnControllerColliderHit(ControllerColliderHit hit){
+		if(hit.gameObject.CompareTag ("Player") && !satisfied){
+			if(basketController.RemoveActiveBerry()){
+				satisfied = true;
 			}
 		}
 	}

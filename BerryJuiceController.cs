@@ -1,29 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class BerryJuiceController : MonoBehaviour {
-	public int startingJuiceAmount = 0;
-	public int juiceAmount = 0;
+	public float maximumJuiceAmount = 5000;
+	public float initialJuiceAmount = 100;
+	public float juiceAmount = 0;
 	public int goodBerryCount = 0;
 	public int badBerryCount = 0;
 	public int multiplierRate = 0;
+	public int passiveDrain = 10;
 	public GameObject basketObject;
+	public GameObject fullMeter;
+	public GameObject currentMeter;
 
 	private BasketController mainBasketController;
 
 	void Start () {
-		juiceAmount = startingJuiceAmount;
+		juiceAmount = initialJuiceAmount;
 		mainBasketController = basketObject.GetComponent<BasketController> ();
-		InvokeRepeating("UpdateEvery1Sec", 0, 2.0F);
+		InvokeRepeating("UpdateEvery1Sec", 0, 1);
 	}
 		
 	void Update () {
+		if (Input.GetKeyDown ("space")) {
+			this.juiceAmount -= 10;
+		}
+
 		this.multiplierRate = mainBasketController.GetTotalMultiplier ();
 		this.goodBerryCount = mainBasketController.GetGoodBerryCount ();
 		this.badBerryCount = mainBasketController.GetBadBerryCount ();
 	}
 
 	void UpdateEvery1Sec() {
-		this.juiceAmount += this.multiplierRate;
+		float tempAmount = this.juiceAmount + this.multiplierRate;
+		this.juiceAmount = Math.Max (0, Math.Min (tempAmount, maximumJuiceAmount));
+
+		float newScaleX = fullMeter.transform.localScale.x;
+		float newScaleY = (this.juiceAmount / maximumJuiceAmount) * fullMeter.transform.localScale.y;
+		currentMeter.transform.localScale = new Vector3 (newScaleX, newScaleY);
+		float newX = fullMeter.transform.position.x;
+		float newY = fullMeter.transform.position.y - 
+			fullMeter.GetComponent<RectTransform>().rect.height * (1 - (this.juiceAmount / maximumJuiceAmount)) / 2;
+		currentMeter.transform.position = new Vector3 (newX, newY);
 	}
 }

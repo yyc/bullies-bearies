@@ -93,16 +93,15 @@ public class BasketController : MonoBehaviour {
 		return berryList [this.activeBerryIndex];
 		
 	}
-	
-	void SwitchActiveBerry() {
+
+	public bool RemoveActiveBerry() {
 		if (berryList.Count < 1) {
-			return;
+			return false;
+		} else {
+			berryList.RemoveAt(activeBerryIndex);
+			activeBerryIndex = Math.Min (activeBerryIndex, berryList.Count - 1);
+			return true;
 		}
-		
-		this.activeBerryIndex = (this.activeBerryIndex + 1) % this.berryList.Count;
-	}
-	
-	public void RemoveActiveBerry() {
 	}
 
 	public int GetGoodBerryCount() {
