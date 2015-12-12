@@ -38,6 +38,10 @@ public class BerryJuiceController : MonoBehaviour {
 		float newX = fullMeter.transform.position.x;
 		float newY = fullMeter.transform.position.y - 
 			fullMeter.GetComponent<RectTransform>().rect.height * (1 - (this.juiceAmount / maximumJuiceAmount)) / 2;
-		currentMeter.transform.position = new Vector3 (newX, newY);	}
+		currentMeter.transform.position = new Vector3 (newX, newY);
+	}
+	public bool IsFull(){
+		return juiceAmount == maximumJuiceAmount;
+	}
 
 }

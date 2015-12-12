@@ -7,6 +7,7 @@ public class ChickenController : MonoBehaviour {
 	GameObject upgradeDialog;
 	// Use this for initialization
 	void Start () {
+		Debug.Log ("Chicken Spawned");
 		basketController = GameObject.Find ("Basket").GetComponent<BasketController> ();
 		upgradeDialog = GameObject.Find ("UpgradeDialog");
 	}
@@ -42,11 +43,12 @@ public class ChickenController : MonoBehaviour {
 	void UpgradeBriefcase(){
 
 	}
-	void SpawnElsewhere(){
+	public void SpawnElsewhere(){
 		GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
 		int numPlatforms = platforms.Length;
 		int newIndex = Mathf.FloorToInt (numPlatforms * Mathf.Min (0.99f, Random.value));
-		this.transform.position = platforms[newIndex].transform.position + new Vector3(0, 5, 0);
-//			SpawnElsewhere(platforms, newIndex);
+		this.transform.position = platforms[newIndex].transform.position 
+			+ new Vector3(0, (platforms[newIndex].transform.localScale.y + this.GetComponent<BoxCollider>().size.y * this.transform.localScale.y) / 2, 0);
+		//			SpawnElsewhere(platforms, newIndex);
 	}
 }
