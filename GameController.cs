@@ -16,11 +16,13 @@ public class GameController : MonoBehaviour {
 
 	private GameObject upgradeChicken;
 	private BerryJuiceController berryJuiceController;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		bushes = GameObject.FindGameObjectsWithTag ("Bush");
 		berryJuiceController = GameObject.Find ("berryJuiceController").GetComponent<BerryJuiceController>();
+		player = GameObject.Find ("Player");
 		maxBerries = Mathf.Min (maxBerries, bushes.Length);
 		upgradeChicken = Object.Instantiate (chickenPrefab);
 		upgradeChicken.SetActive (false);
@@ -36,9 +38,16 @@ public class GameController : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		if (berryJuiceController.IsFull () && !upgradeChicken.activeInHierarchy) {
-			upgradeChicken.SetActive (true);
-			upgradeChicken.GetComponent<ChickenController>().SpawnElsewhere();
+		if (berryJuiceController.IsFull ()) {
+			if(!upgradeChicken.activeInHierarchy){
+				upgradeChicken.SetActive (true);
+				upgradeChicken.GetComponent<ChickenController> ().SpawnElsewhere ();
+			}
+			player.GetComponent<PlayerController>().showHeart ();
+		} else if (berryJuiceController.IsEmpty ()) {
+			player.GetComponent<PlayerController>().showSweat ();
+		} else {
+			player.GetComponent<PlayerController>().closeBubble();
 		}
 	}
 	void EverySecond(){

@@ -7,16 +7,25 @@ public class PlayerController : MonoBehaviour {
 	public float Gravity = 20f;
 	public float JumpSpeed = 8f;
 	public float JumpHeight = 20f;
-	
+	public GameObject basket;
+	public Sprite heartEmoji;
+	public Sprite sweatEmoji;
+
+
 	private CharacterController characterController;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	
 	private bool facingRight = true;
-	public GameObject basket;
+	private GameObject speechBubble;
+	private GameObject playerEmoji;
 
 	void Start() {
 		characterController = gameObject.GetComponent<CharacterController> ();
+		speechBubble = GameObject.Find ("playerSpeechBubble");
+		playerEmoji = GameObject.Find ("playerEmoji");
+		speechBubble.GetComponent<Animator> ().GetBehaviour<SpeechBubbleBehaviour> ().playerEmoji = playerEmoji;
+		closeBubble ();
 	}
 	// Every frame
 	void Update () {
@@ -36,9 +45,6 @@ public class PlayerController : MonoBehaviour {
 		if (moveDirection.x < 0 && facingRight || moveDirection.x > 0 && !facingRight) {
 			Flip ();
 		}
-		if (Input.GetKeyDown ("space")) {
-			basket.GetComponent<BasketController>().AddBerry(new Berry(true, 20));
-		}
 		moveDirection.y -= Gravity * Time.deltaTime;
 		characterController.Move (moveDirection * Time.deltaTime);
 	}
@@ -48,5 +54,28 @@ public class PlayerController : MonoBehaviour {
 		Vector3 currScale = transform.localScale;
 		currScale.x *= -1;
 		transform.localScale = currScale;
+	}
+	void makeBubble(Sprite emoji){
+		if (playerEmoji.GetComponent<SpriteRenderer> ().sprite == emoji) {
+			return;
+		} else {
+			speechBubble.GetComponent<SpriteRenderer> ().enabled = true;
+			speechBubble.GetComponent<Animator> ().SetTrigger ("Close");
+			speechBubble.GetComponent<Animator> ().SetTrigger ("Start");
+			playerEmoji.GetComponent<SpriteRenderer> ().sprite = emoji;
+		}
+	}
+	public void closeBubble(){
+		playerEmoji.GetComponent<SpriteRenderer> ().enabled = false;
+		speechBubble.GetComponent<SpriteRenderer> ().enabled = false;
+		playerEmoji.GetComponent<SpriteRenderer> ().sprite = null;
+		speechBubble.GetComponent<Animator> ().ResetTrigger ("Start");
+		speechBubble.GetComponent<Animator> ().SetTrigger ("Close");
+	}
+	public void showHeart(){
+		makeBubble (heartEmoji);
+	}
+	public void showSweat(){
+		makeBubble (sweatEmoji);
 	}
 }

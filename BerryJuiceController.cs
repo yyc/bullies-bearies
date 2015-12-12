@@ -5,6 +5,7 @@ using System;
 public class BerryJuiceController : MonoBehaviour {
 	public float maximumJuiceAmount = 5000;
 	public float initialJuiceAmount = 100;
+	public float lowThreshold = 0;
 	public float juiceAmount = 0;
 	public int goodBerryCount = 0;
 	public int badBerryCount = 0;
@@ -37,10 +38,13 @@ public class BerryJuiceController : MonoBehaviour {
 		currentMeter.transform.localScale = new Vector3 (newScaleX, newScaleY);
 		float newX = fullMeter.transform.position.x;
 		float newY = fullMeter.transform.position.y - 
-			fullMeter.GetComponent<RectTransform>().rect.height * (1 - (this.juiceAmount / maximumJuiceAmount)) / 2;
+		fullMeter.GetComponent<RectTransform>().rect.height * (1 - (this.juiceAmount / maximumJuiceAmount)) / 2;
 		currentMeter.transform.position = new Vector3 (newX, newY);
 	}
 	public bool IsFull(){
 		return juiceAmount == maximumJuiceAmount;
+	}
+	public bool IsEmpty(){
+		return juiceAmount <= lowThreshold;
 	}
 }
