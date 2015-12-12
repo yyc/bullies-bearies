@@ -13,35 +13,31 @@ public class BerryJuiceController : MonoBehaviour {
 	public GameObject basketObject;
 	public GameObject fullMeter;
 	public GameObject currentMeter;
+	public GameController gameController;
 
 	private BasketController mainBasketController;
 
 	void Start () {
 		juiceAmount = initialJuiceAmount;
 		mainBasketController = basketObject.GetComponent<BasketController> ();
-		InvokeRepeating("UpdateEvery1Sec", 0, 1);
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 		
 	void Update () {
-		if (Input.GetKeyDown ("space")) {
-			this.juiceAmount -= 10;
-		}
-
 		this.multiplierRate = mainBasketController.GetTotalMultiplier ();
 		this.goodBerryCount = mainBasketController.GetGoodBerryCount ();
 		this.badBerryCount = mainBasketController.GetBadBerryCount ();
 	}
-
-	void UpdateEvery1Sec() {
-		float tempAmount = this.juiceAmount + this.multiplierRate;
+	void FixedUpdate(){ //60fps update
+		float tempAmount = this.juiceAmount + (this.multiplierRate - this.passiveDrain * gameController.difficultyMultiplier) * Time.smoothDeltaTime;
 		this.juiceAmount = Math.Max (0, Math.Min (tempAmount, maximumJuiceAmount));
-
+		
 		float newScaleX = fullMeter.transform.localScale.x;
 		float newScaleY = (this.juiceAmount / maximumJuiceAmount) * fullMeter.transform.localScale.y;
 		currentMeter.transform.localScale = new Vector3 (newScaleX, newScaleY);
 		float newX = fullMeter.transform.position.x;
 		float newY = fullMeter.transform.position.y - 
 			fullMeter.GetComponent<RectTransform>().rect.height * (1 - (this.juiceAmount / maximumJuiceAmount)) / 2;
-		currentMeter.transform.position = new Vector3 (newX, newY);
-	}
+		currentMeter.transform.position = new Vector3 (newX, newY);	}
+
 }

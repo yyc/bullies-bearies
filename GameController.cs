@@ -4,6 +4,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 	public float dayNightCycle = 0;
 	public float period = 60; // period in seconds
+	public float difficultyMultiplier = 1;
 	public float berrySpawnInterval = 10000; // interval in seconds
 	public int maxBerries = 3;
 	public int spawnBerries = 1;

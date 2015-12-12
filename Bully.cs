@@ -22,7 +22,6 @@ public class Bully : MonoBehaviour {
 	
 	void Update () {
 		if (satisfied) {
-// 			Satisfied();
 		} else {
 			Move ();
 		}
@@ -33,7 +32,7 @@ public class Bully : MonoBehaviour {
 	}
 
 	void Move() {
-		if (characterController.isGrounded) {
+       if (characterController.isGrounded) {
 			moveDirection = new Vector3 (facingRight, 0, 0);
 			moveDirection = transform.TransformDirection (moveDirection);
 			moveDirection *= Speed;
@@ -68,5 +67,18 @@ public class Bully : MonoBehaviour {
 		Vector3 currScale = transform.localScale;
 		currScale.x *= -1;
 		transform.localScale = currScale;
+	}
+	void OnBecameInvisible(){
+		if (satisfied) {
+			GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
+			int numPlatforms = platforms.Length;
+			this.transform.position = platforms[Mathf.FloorToInt(numPlatforms * Mathf.Min (0.99f, Random.value))].transform.position 
+				+ new Vector3(0, 5, 0);
+			if(this.GetComponent<SpriteRenderer>().isVisible){
+				OnBecameInvisible();
+			} else{
+				satisfied = false;
+			}
+		}
 	}
 }
