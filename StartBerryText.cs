@@ -3,10 +3,12 @@ using System.Collections;
 
 public class StartBerryText : MonoBehaviour {
 	public string msg = "";
+	private string defaultMessage;
 	public TextMesh berryText;
 
 	// Use this for initialization
 	void Start () {
+		defaultMessage = berryText.text;
 	}
 	
 	// Update is called once per frame
@@ -18,6 +20,6 @@ public class StartBerryText : MonoBehaviour {
 	}
 
 	void OnTriggerExit() {
-		berryText.text = "";
+		berryText.text = defaultMessage;
 	}
 }

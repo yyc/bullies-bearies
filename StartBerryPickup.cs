@@ -13,7 +13,10 @@ public class StartBerryPickup : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		print ("entering scene " + SceneToLoad);
+		Debug.Log ("entering scene " + SceneToLoad);
 		Application.LoadLevel (SceneToLoad);
+	}
+	void OnTriggerEnter(){
+		Debug.Log ("hi");
 	}
 }
