@@ -63,7 +63,7 @@ public class TutorialController : MonoBehaviour {
 		tutorialDialogue[3,0] = "Oh... That's a bad one. It's draining your Juice Bar instead!"; 
 		tutorialDialogue[3,1] = "Well, I'll show you how to get rid of it."; 
 		tutorialDialogue[3,2] = "Find a Bully. They're usually pretty pissed off, but they love Bearries."; 
-		tutorialDialogue[3,3] = "Their tastebud deficiencies mean he can't tell whether Bearries are bad or good!"; 
+		tutorialDialogue[3,3] = "His tastebud deficiencies mean he can't tell whether Bearries are bad or good!"; 
 		tutorialDialogue[3,4] = "Bump into the Bully with the bad Bearry active!"; 
 		tutorialDialogue[3,5] = "Try to fill up the Juice Bar! I'm just gonna wait here."; 
 
@@ -71,7 +71,8 @@ public class TutorialController : MonoBehaviour {
 		tutorialDialogue[4,1] = "Buy something from him, and he'll go away. Looks like this guy sells briefcases."; 
 		tutorialDialogue[4,2] = "Be careful, because Business Chickens take half your current Juice as payment!"; 
 
-		tutorialDialogue[5,0] = "That's all you need to know. Now go get us some Bearries, newbie!"; 		displayMessage (0);
+		tutorialDialogue[5,0] = "Don't let your Juice Bar reach 0! Or else I'll yell at you!";
+		tutorialDialogue[5,1] = "That's all you need to know. Now go get us some Bearries, newbie!"; 		displayMessage (0);
 	}
 	GameObject bushWithoutBerry(GameObject[] bushes){
 		int rand = Mathf.FloorToInt(UnityEngine.Random.value * bushes.Length);
