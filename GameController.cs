@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
@@ -13,6 +14,8 @@ public class GameController : MonoBehaviour {
 	public GameObject berryPrefab;
 	GameObject[] bushes;
 	public GameObject chickenPrefab;
+
+	public Text timerText;
 
 	private GameObject upgradeChicken;
 	private BerryJuiceController berryJuiceController;
@@ -51,6 +54,7 @@ public class GameController : MonoBehaviour {
 		} else {
 			player.GetComponent<PlayerController>().closeBubble();
 		}
+		timerText.text = ((int)(seconds/60)).ToString("00") + ":" + ((int)(seconds % 60)).ToString ("00");
 	}
 	void EverySecond(){
 		seconds += 1f;
