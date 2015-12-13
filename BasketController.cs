@@ -104,7 +104,7 @@ public class BasketController : MonoBehaviour {
 		return total;
 	}
 	
-	Berry GetActiveBerry() {
+	public Berry GetActiveBerry() {
 		if (this.berryList.Count < 1) {
 			return null;
 		}
@@ -144,7 +144,6 @@ public class BasketController : MonoBehaviour {
 		}
 		return badBerryCount;
 	}
-
 	public bool isEmpty() {
 		return ! (this.berryList.Count > 0);
 	}

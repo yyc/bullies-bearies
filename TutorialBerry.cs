@@ -7,12 +7,10 @@ public class TutorialBerry : MonoBehaviour {
 	public bool isGood;
 	public int multiplier;
 
-	private BasketController basket;
-	private TutorialController tutorialController;
+	public BasketController basketController;
+	public TutorialController tutorialController;
 	// Use this for initialization
 	void Start () {
-		basket = GameObject.Find ("Basket").GetComponent<BasketController> ();
-		tutorialController = GameObject.Find ("TutorialController").GetComponent<TutorialController> ();
 	}
 	
 	// Update is called once per frame
@@ -20,13 +18,10 @@ public class TutorialBerry : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
-		if (basket == null) {
-			basket = GameObject.Find ("Basket").GetComponent<BasketController> ();
-		}
-		if (other.gameObject.CompareTag ("Player") && !basket.IsFull()) {
+		if (other.gameObject.CompareTag ("Player") && !basketController.IsFull()) {
 			tutorialController.sendUpdate(ControllerMessage);
-			basket.AddBerry (new Berry(isGood, multiplier, this.gameObject.GetComponentsInChildren<SpriteRenderer>()[0].sprite));
-			Destroy (gameObject);
+			basketController.AddBerry (new Berry(isGood, multiplier, this.gameObject.GetComponentsInChildren<SpriteRenderer>()[0].sprite));
+			this.gameObject.SetActive (false);
 		}
 	}
 
