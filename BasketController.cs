@@ -23,7 +23,7 @@ public class BasketController : MonoBehaviour {
 		basketSizeIndicator = GameObject.Find ("BasketSizeIndicator").GetComponent<Text> ();
 		goodBerryIndicator = GameObject.Find ("GoodBerryIndicator").GetComponent<Text> ();
 		badBerryIndicator = GameObject.Find ("BadBerryIndicator").GetComponent<Text> ();
-		InvokeRepeating("UpdateEvery30Sec", 0, 30.0F);
+		InvokeRepeating("UpdateEvery2Sec", 0, 2);
 	}
 	
 	// Update is called once per frame
@@ -55,10 +55,10 @@ public class BasketController : MonoBehaviour {
 		}
 	}
 	
-	void UpdateEvery30Sec() {
+	void UpdateEvery2Sec() {
 		bool isDay = dayNightCycle > 0;
-		float largeProbability = Math.Abs (dayNightCycle) * 0.1F;
-		float smallProbability = Math.Abs (dayNightCycle) * 0.01F;
+		float largeProbability = Math.Abs (dayNightCycle) * 0.5F;
+		float smallProbability = Math.Abs (dayNightCycle) * 0.1F;
 		float goodToBoodProbability = (isDay) ? smallProbability : largeProbability;
 		float badToGoodProbability = (isDay) ? largeProbability : smallProbability;
 		System.Random rng = new System.Random();
