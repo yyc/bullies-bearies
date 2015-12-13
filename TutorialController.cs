@@ -1,5 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialController : MonoBehaviour {
 	private float seconds = 0;
@@ -18,8 +20,11 @@ public class TutorialController : MonoBehaviour {
 	private BerryJuiceController berryJuiceController;
 	private BasketController basketController;
 	private GameObject player;
+	private Text bearWindowText;
 	private int state = -1; // private
 	private Vector3 chickenPosition;
+	private string[,] tutorialDialogue = new string[10,10];
+	private int dialogueIndex = 0;
 	GameObject[] bushes;
 
 	// Use this for initialization
@@ -28,6 +33,7 @@ public class TutorialController : MonoBehaviour {
 		berryJuiceController = GameObject.Find ("berryJuiceController").GetComponent<BerryJuiceController>();
 		basketController = GameObject.Find ("Basket").GetComponent<BasketController> ();
 		player = GameObject.Find ("Player");
+		bearWindowText = GameObject.Find ("BearWindow").GetComponentInChildren<Text> ();
 		maxBerries = Mathf.Min (maxBerries, bushes.Length);
 		foreach (GameObject berry in tutorialBerries) {
 			berry.GetComponent<TutorialBerry>().tutorialController = this.GetComponent<TutorialController>();
@@ -39,9 +45,36 @@ public class TutorialController : MonoBehaviour {
 		upgradeChicken = GameObject.Find ("Chicken");
 		upgradeChicken.SetActive (false);
 		chickenPosition = upgradeChicken.transform.position;
+		tutorialDialogue[0,0] = "First day on the job, newbie? Press Space to continue.";
+		tutorialDialogue[0, 1] = "Guess I'll have to show you the ropes. ";
+		tutorialDialogue[0,2] = "Use the arrow keys to move around and jump!";
+		tutorialDialogue[0,3] = "Didn't your mother teach you how to do this?";
+		tutorialDialogue[0,4] = "Our office is powered solely by Bearry Juice from Bearries.";
+		tutorialDialogue[0,5] = "As you can see, we're running low. That's why it's so dark in here!";
+		tutorialDialogue[0,6] = "To pick up a Bearry, walk over it. Try finding one now.";
+		
+		tutorialDialogue[1,0] = "Look at that! Your Bearry Juice Bar is increasing!";
+		tutorialDialogue[1,1] = "You only have space in your briefcase for a few Bearies at a time.";
+		tutorialDialogue [1, 2] = "Pick up another! We need more!";
+
+		tutorialDialogue[2,0] = "Oh no, Your Juice Bar is draining!";
+		tutorialDialogue[2,1] = "Try pressing Q and E to change your active Bearry."; 
+
+		tutorialDialogue[3,0] = "Oh... That's a bad one. It's draining your Juice Bar instead!"; 
+		tutorialDialogue[3,1] = "Well, I'll show you how to get rid of it."; 
+		tutorialDialogue[3,2] = "Find a Bully. They're usually pretty pissed off, but they love Bearries."; 
+		tutorialDialogue[3,3] = "Their tastebud deficiencies mean he can't tell whether Bearries are bad or good!"; 
+		tutorialDialogue[3,4] = "Bump into the Bully with the bad Bearry active!"; 
+		tutorialDialogue[3,5] = "Try to fill up the Juice Bar! I'm just gonna wait here."; 
+
+		tutorialDialogue[4,0] = "Look at that! Pesky Business Chickens can smell when you have plentiful Bearry Juice."; 
+		tutorialDialogue[4,1] = "Buy something from him, and he'll go away. Looks like this guy sells briefcases."; 
+		tutorialDialogue[4,2] = "Be careful, because Business Chickens take half your current Juice as payment!"; 
+
+		tutorialDialogue[5,0] = "That's all you need to know. Now go get us some Bearries, newbie!"; 		displayMessage (0);
 	}
 	GameObject bushWithoutBerry(GameObject[] bushes){
-		int rand = Mathf.FloorToInt(Random.value * bushes.Length);
+		int rand = Mathf.FloorToInt(UnityEngine.Random.value * bushes.Length);
 		return bushes[rand];
 	}
 	// Update is called once per frame
@@ -52,6 +85,9 @@ public class TutorialController : MonoBehaviour {
 			player.GetComponent<PlayerController>().showSweat ();
 		} else {
 			player.GetComponent<PlayerController>().closeBubble();
+		}
+		if (Input.GetKeyDown ("space")) {
+			displayMessage (dialogueIndex + 1);
 		}
 		switch (state) {
 		case 1:
@@ -116,10 +152,14 @@ public class TutorialController : MonoBehaviour {
 	- Done! Play game.
 	*/
 			}
+			displayMessage(0);
 		}
 	}
-	void displayMessage(string msg){
-
+	void displayMessage(int index){
+		if(tutorialDialogue[state + 1, index] != null){
+			bearWindowText.text = tutorialDialogue[state + 1, index];
+			dialogueIndex = index;
+		}
 	}
 	void hideMessage(){
 
